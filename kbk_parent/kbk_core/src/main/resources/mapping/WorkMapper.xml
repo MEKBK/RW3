@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbk.dao.WorkMapper">
+  <resultMap id="BaseResultMap" type="com.kbk.model.Work">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="BIT" />
+      <arg column="frist_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="second_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="introduction" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="thumbnail" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="content" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="created_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="updated_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="updated_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, status, frist_id, second_id, introduction, thumbnail, url, content, picture, 
+    created_time, updated_time, updated_by
+  </sql>
+
+<!-- 前台 -->
+  <!--多字段模糊查询-->
+  <select id="selectByCondition" parameterType="java.util.Map" resultType="com.kbk.model.Work">
+    SELECT
+    id, name, introduction, thumbnail
+    FROM
+    work
+    <where>
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="name != null" >
+        and name = #{name}
+      </if>
+      <if test="introduction != null" >
+        and introduction = #{introduction}
+      </if>
+    </where>
+  </select>
+
+  <!--单表查询作品详情-->
+  <select id="selectWorksById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from work
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据主键查找所有 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from work
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from work
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+
+  <insert id="insert" parameterType="com.kbk.model.Work">
+    insert into work (id, name, status, 
+      frist_id, second_id, introduction, 
+      thumbnail, url, content, 
+      picture, created_time, updated_time, 
+      updated_by)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{fristId,jdbcType=BIGINT}, #{secondId,jdbcType=BIGINT}, #{introduction,jdbcType=VARCHAR}, 
+      #{thumbnail,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{picture,jdbcType=VARCHAR}, #{createdTime,jdbcType=BIGINT}, #{updatedTime,jdbcType=BIGINT}, 
+      #{updatedBy,jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 插入选择性，当条件成立，if中的SQL语句会和外面SQL语句拼接到一起
+     trim标签的作用：灵活配置添加前缀、后缀，删除前缀、后缀
+     语法：使用&lt;trim&gt;代替&lt;set&gt;
+          &lt;trim prefix="添加前缀" suffix="添加后缀" prefixOverride="删除前缀" suffixOverride="删除后缀"：-->
+  <insert id="insertSelective" parameterType="com.kbk.model.Work">
+    insert into work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="fristId != null">
+        frist_id,
+      </if>
+      <if test="secondId != null">
+        second_id,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="thumbnail != null">
+        thumbnail,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="fristId != null">
+        #{fristId,jdbcType=BIGINT},
+      </if>
+      <if test="secondId != null">
+        #{secondId,jdbcType=BIGINT},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null">
+        #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.kbk.model.Work">
+    update work
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="fristId != null">
+        frist_id = #{fristId,jdbcType=BIGINT},
+      </if>
+      <if test="secondId != null">
+        second_id = #{secondId,jdbcType=BIGINT},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null">
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <update id="updateByPrimaryKey" parameterType="com.kbk.model.Work">
+    update work
+    set name = #{name,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIT},
+      frist_id = #{fristId,jdbcType=BIGINT},
+      second_id = #{secondId,jdbcType=BIGINT},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      picture = #{picture,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=BIGINT},
+      updated_by = #{updatedBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

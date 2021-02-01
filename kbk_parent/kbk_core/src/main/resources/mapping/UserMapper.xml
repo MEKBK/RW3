@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbk.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.kbk.model.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="passwrod" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="role" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="created_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="updated_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="created_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+<!-- 复用的SQL语句 -->
+  <sql id="Base_Column_List">
+    id, user_name, passwrod, role, created_time, updated_time, created_by
+  </sql>
+
+<!-- 根据主键查找所有 -->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据主键删除 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <!-- 根据主键增加 -->
+  <insert id="insert" parameterType="com.kbk.model.User">
+    insert into user (id, user_name, passwrod, 
+      role, created_time, updated_time, 
+      created_by)
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{passwrod,jdbcType=VARCHAR}, 
+      #{role,jdbcType=VARCHAR}, #{createdTime,jdbcType=BIGINT}, #{updatedTime,jdbcType=BIGINT}, 
+      #{createdBy,jdbcType=VARCHAR})
+  </insert>
+
+<!-- 插入选择性，当条件成立，if中的SQL语句会和外面SQL语句拼接到一起
+     trim标签的作用：灵活配置添加前缀、后缀，删除前缀、后缀
+     语法：使用&lt;trim&gt;代替&lt;set&gt;
+          &lt;trim prefix="添加前缀" suffix="添加后缀" prefixOverride="删除前缀" suffixOverride="删除后缀"：-->
+  <insert id="insertSelective" parameterType="com.kbk.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="passwrod != null">
+        passwrod,
+      </if>
+      <if test="role != null">
+        role,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwrod != null">
+        #{passwrod,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+<!-- 通过主键选择更新
+     set标签的作用是：去除逗号，-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.kbk.model.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwrod != null">
+        passwrod = #{passwrod,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null">
+        role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+<!-- 通过主键更新所有数据 -->
+  <update id="updateByPrimaryKey" parameterType="com.kbk.model.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      passwrod = #{passwrod,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=BIGINT},
+      created_by = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

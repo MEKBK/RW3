@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbk.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.kbk.model.Role">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="role_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="banner" javaType="byte[]" jdbcType="BIT" />
+      <arg column="message" javaType="byte[]" jdbcType="BIT" />
+      <arg column="studio" javaType="byte[]" jdbcType="BIT" />
+      <arg column="work" javaType="byte[]" jdbcType="BIT" />
+      <arg column="created_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="updated_time" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="created_by" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_name, banner, message, studio, work, created_time, updated_time, created_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.kbk.model.Role">
+    insert into role (id, role_name, banner, 
+      message, studio, work, created_time, 
+      updated_time, created_by)
+    values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{banner,jdbcType=BIT}, 
+      #{message,jdbcType=BIT}, #{studio,jdbcType=BIT}, #{work,jdbcType=BIT}, #{createdTime,jdbcType=BIGINT}, 
+      #{updatedTime,jdbcType=BIGINT}, #{createdBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.kbk.model.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="banner != null">
+        banner,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="studio != null">
+        studio,
+      </if>
+      <if test="work != null">
+        work,
+      </if>
+      <if test="createdTime != null">
+        created_time,
+      </if>
+      <if test="updatedTime != null">
+        updated_time,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="banner != null">
+        #{banner,jdbcType=BIT},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=BIT},
+      </if>
+      <if test="studio != null">
+        #{studio,jdbcType=BIT},
+      </if>
+      <if test="work != null">
+        #{work,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null">
+        #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.kbk.model.Role">
+    update role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="banner != null">
+        banner = #{banner,jdbcType=BIT},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=BIT},
+      </if>
+      <if test="studio != null">
+        studio = #{studio,jdbcType=BIT},
+      </if>
+      <if test="work != null">
+        work = #{work,jdbcType=BIT},
+      </if>
+      <if test="createdTime != null">
+        created_time = #{createdTime,jdbcType=BIGINT},
+      </if>
+      <if test="updatedTime != null">
+        updated_time = #{updatedTime,jdbcType=BIGINT},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.kbk.model.Role">
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      banner = #{banner,jdbcType=BIT},
+      message = #{message,jdbcType=BIT},
+      studio = #{studio,jdbcType=BIT},
+      work = #{work,jdbcType=BIT},
+      created_time = #{createdTime,jdbcType=BIGINT},
+      updated_time = #{updatedTime,jdbcType=BIGINT},
+      created_by = #{createdBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
