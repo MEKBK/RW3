@@ -1,5 +1,6 @@
 package com.kbk.model;
 
+
 public class Message {
     private Long id;
 
@@ -19,6 +20,7 @@ public class Message {
 
     private Long replyId;
 
+
     public Message(Long id, Long workId, String touristName, Integer status, Long roleId, Long createdTime, Long updatedTime, String contents, Long replyId) {
         this.id = id;
         this.workId = workId;
@@ -32,7 +34,7 @@ public class Message {
     }
 
     public Message() {
-        super();
+
     }
 
     public Long getId() {

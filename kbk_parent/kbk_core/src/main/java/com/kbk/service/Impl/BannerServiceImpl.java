@@ -7,6 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+/**
+ * @Description
+ * @Author 况博凯
+ * @Date 2021/02/24 10:14
+ * @Version 1.0
+ */
 @Service
 public class BannerServiceImpl implements BannerService {
     @Autowired
@@ -18,7 +24,17 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public int insert(Banner banner){
-        return bannerMapper.insert(banner);
+    public boolean insertSelective(Banner banner){
+        int i = bannerMapper.insertSelective(banner);
+        if(i>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Banner> selectBannerByStatus(Boolean status) {
+        List<Banner> banners = bannerMapper.selectBannerByStatus(status);
+        return banners;
     }
 }

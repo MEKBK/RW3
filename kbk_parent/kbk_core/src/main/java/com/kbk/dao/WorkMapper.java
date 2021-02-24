@@ -3,14 +3,20 @@ package com.kbk.dao;
 import com.kbk.model.Work;
 
 import java.util.List;
+/**
+ * @Description
+ * @Author 况博凯
+ * @Date 2021/02/24 10:14
+ * @Version 1.0
+ */
 
 public interface WorkMapper {
     /**
-     *多字段模糊查询
-     * @Param [keyword]
-     * @return java.util.List<com.jnshu.pojo.Works>
+     *  添加数据
+     * @param work
+     * @return
      **/
-    List<Work> selectByCondition(Work work);
+    int insertSelective(Work work);
 
     /**
      * 根据ID查询所有

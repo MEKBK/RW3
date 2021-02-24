@@ -20,7 +20,7 @@
         <init-param>
             <!--配置处理适配器地址,交给springmvc.xml分配处理器-->
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:spring-mvc.xml</param-value>
+            <param-value>classpath*:spring-mvc.xml</param-value>
         </init-param>
         <!--打开处理器-->
         <load-on-startup>1</load-on-startup>

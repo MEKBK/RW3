@@ -11,7 +11,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @Description
+ * @Author 况博凯
+ * @Date 2021/02/24 10:14
+ * @Version 1.0
+ */
 @RestController
 public class TitleController {
     @Autowired
@@ -25,10 +30,10 @@ public class TitleController {
      */
     @GetMapping("/api/title")
     public Map<String, Object> getFirst() {
-        //判断一级标题是否存在
+        //查询全部
         List<TitleTestVo> title = titleService.selectOrTitle();
         if (null == title) {
-            return Restful.set(404, "查询title失败");
+            return Restful.set(404, "查询title结果为空", title);
         } else {
             return Restful.set(200, "查找title成功", title);
         }

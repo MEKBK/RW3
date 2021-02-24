@@ -7,7 +7,7 @@ public class Banner {
 
     private String url;
 
-    private Integer status;
+    private Boolean status;
 
     private Long createdTime;
 
@@ -15,7 +15,7 @@ public class Banner {
 
     private String updateBy;
 
-    public Banner(Long id, String cover, String url, Integer status, Long createdTime, Long updateTime, String updateBy) {
+    public Banner(Long id, String cover, String url, Boolean status, Long createdTime, Long updateTime, String updateBy) {
         this.id = id;
         this.cover = cover;
         this.url = url;
@@ -53,11 +53,11 @@ public class Banner {
         this.url = url == null ? null : url.trim();
     }
 
-    public Integer getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

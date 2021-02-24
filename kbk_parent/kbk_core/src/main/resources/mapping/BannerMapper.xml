@@ -6,7 +6,7 @@
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="cover" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="url" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="status" javaType="java.lang.Integer" jdbcType="BIT" />
+      <arg column="status" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="created_time" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="update_time" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="update_by" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -16,26 +16,19 @@
     id, cover, url, status, created_time, update_time, update_by
   </sql>
 
-<!-- 前台，查找banner列表 -->
+<!-- 后台，查找banner列表 -->
   <select id="selectBannerList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from banner
   </select>
 
-<!-- 后台 -->
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from banner
-    where id = #{id,jdbcType=BIGINT}
+<!-- 前台 -->
+  <select id="selectBannerByStatus" parameterType="java.lang.Boolean" resultMap="BaseResultMap">
+        select id,cover from banner
+        where status = #{status,jdbcType=BIT}
   </select>
 
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from banner
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
 
 
   <insert id="insert" parameterType="com.kbk.model.Banner">
@@ -98,41 +91,4 @@
     </trim>
   </insert>
 
-
-  <update id="updateByPrimaryKeySelective" parameterType="com.kbk.model.Banner">
-    update banner
-    <set>
-      <if test="cover != null">
-        cover = #{cover,jdbcType=VARCHAR},
-      </if>
-      <if test="url != null">
-        url = #{url,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=BIGINT},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=BIGINT},
-      </if>
-      <if test="updateBy != null">
-        update_by = #{updateBy,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-
-
-  <update id="updateByPrimaryKey" parameterType="com.kbk.model.Banner">
-    update banner
-    set cover = #{cover,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      created_time = #{createdTime,jdbcType=BIGINT},
-      update_time = #{updateTime,jdbcType=BIGINT},
-      update_by = #{updateBy,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 </mapper>

@@ -1,22 +1,21 @@
-package com.kbk.dao;
+package com.kbk.service;
+
 
 import com.kbk.model.Studio;
+import org.springframework.stereotype.Service;
 /**
  * @Description
  * @Author 况博凯
  * @Date 2021/02/24 10:14
  * @Version 1.0
  */
-public interface StudioMapper {
-
-
+@Service
+public interface StudioService {
 
     /**
      *  添加数据
-     * @param studio 输入参数
+     * @param studio
      * @return
      **/
     int insertSelective(Studio studio);
-
-
 }

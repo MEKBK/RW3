@@ -31,27 +31,21 @@ public class ForegroundServiceTest {
     @Test
     public void testInsertMessage() throws Exception {
         Message message = new Message();
+        message.setWorkId((long) 10);
         message.setContents("这幅画很好看");
+        message.setStatus(0);
         message.setTouristName("艺术家");
+        message.setRoleId((long) 1);
         message.setWorkId((long) 12);
         message.setCreatedTime(System.currentTimeMillis());
+        message.setUpdatedTime(System.currentTimeMillis());
+        message.setReplyId((long) 6);
         messageService.insertMessage(message);
         System.out.println(message);
     }
 
 
 
-    /**
-     *  多字段模糊查询
-     */
-    @Test
-    public void testSelectByCondition() throws Exception {
-        Work w = new Work();
-      //  w.setId((long) 1);
-        w.setName("梵高的老舅");
-     //   w.setIntroduction("123456");
-        System.out.println(workService.selectByCondition(w));
-    }
 
     /**
      *  根据ID查询所有

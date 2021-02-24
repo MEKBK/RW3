@@ -17,7 +17,7 @@
     id, parent_id, `name`, `level`, status, created_time, updated_time, update_by
   </sql>
 
-<!-- 前台，查询全部一级导航 -->
+<!-- 前台，查询全部类容 -->
   <select id="selectFirst" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" /> from title
   </select>

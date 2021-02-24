@@ -15,137 +15,47 @@
     </constructor>
   </resultMap>
 
-  <!-- 前台，游客留言的方法 -->
-  <insert id="insertMessage" parameterType="com.kbk.model.Message" useGeneratedKeys="true">
-        insert into message(contents,tourist_name,created_time,work_id) values (#{contents},#{touristName},#{createdTime},#{workId})
-    </insert>
-
   <sql id="Base_Column_List">
-    id, work_id, tourist_name, status, role_id, created_time, updated_time, contents, 
+    id, work_id, tourist_name, status, role_id, created_time, updated_time, contents,
     reply_id
   </sql>
 
-
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from message
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-
-
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from message
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-
-
-  <insert id="insert" parameterType="com.kbk.model.Message">
-    insert into message (id, work_id, tourist_name, 
-      status, role_id, created_time, 
+  <!-- 前台，游客留言的方法 -->
+  <insert id="insertMessage" parameterType="com.kbk.model.Message">
+    insert into message (id, work_id, tourist_name,
+      status, role_id, created_time,
       updated_time, contents, reply_id
       )
-    values (#{id,jdbcType=BIGINT}, #{workId,jdbcType=BIGINT}, #{touristName,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{roleId,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{workId,jdbcType=BIGINT}, #{touristName,jdbcType=VARCHAR},
+      #{status,jdbcType=BIT}, #{roleId,jdbcType=BIGINT}, #{createdTime,jdbcType=BIGINT},
       #{updatedTime,jdbcType=BIGINT}, #{contents,jdbcType=VARCHAR}, #{replyId,jdbcType=BIGINT}
       )
   </insert>
 
 
-  <insert id="insertSelective" parameterType="com.kbk.model.Message">
-    insert into message
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="workId != null">
-        work_id,
-      </if>
-      <if test="touristName != null">
-        tourist_name,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="roleId != null">
-        role_id,
-      </if>
-      <if test="createdTime != null">
-        created_time,
-      </if>
-      <if test="updatedTime != null">
-        updated_time,
-      </if>
-      <if test="contents != null">
-        contents,
-      </if>
-      <if test="replyId != null">
-        reply_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="workId != null">
-        #{workId,jdbcType=BIGINT},
-      </if>
-      <if test="touristName != null">
-        #{touristName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
-      </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=BIGINT},
-      </if>
-      <if test="createdTime != null">
-        #{createdTime,jdbcType=BIGINT},
-      </if>
-      <if test="updatedTime != null">
-        #{updatedTime,jdbcType=BIGINT},
-      </if>
-      <if test="contents != null">
-        #{contents,jdbcType=VARCHAR},
-      </if>
-      <if test="replyId != null">
-        #{replyId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
+
+  <!-- 前台，查询全部类容 -->
+  <select id="selectByWorkId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from message where work_id = #{workId,jdbcType=BIGINT}
+  </select>
 
 
+  <!-- 前台, 查询评论 -->
+  <select id="selectComment" resultMap="BaseResultMap">
+    select work_id, tourist_name, created_time, contents from message
+  </select>
 
-  <update id="updateByPrimaryKeySelective" parameterType="com.kbk.model.Message">
-    update message
-    <set>
-      <if test="workId != null">
-        work_id = #{workId,jdbcType=BIGINT},
-      </if>
-      <if test="touristName != null">
-        tourist_name = #{touristName,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=BIT},
-      </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=BIGINT},
-      </if>
-      <if test="createdTime != null">
-        created_time = #{createdTime,jdbcType=BIGINT},
-      </if>
-      <if test="updatedTime != null">
-        updated_time = #{updatedTime,jdbcType=BIGINT},
-      </if>
-      <if test="contents != null">
-        contents = #{contents,jdbcType=VARCHAR},
-      </if>
-      <if test="replyId != null">
-        reply_id = #{replyId,jdbcType=BIGINT},
-      </if>
-    </set>
+  <!-- 前台，查询留言 -->
+  <select id="selectReply" resultMap="BaseResultMap">
+    select tourist_name, role_id, created_time, contents, reply_id from message
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from message
     where id = #{id,jdbcType=BIGINT}
-  </update>
+  </delete>
 
 
 

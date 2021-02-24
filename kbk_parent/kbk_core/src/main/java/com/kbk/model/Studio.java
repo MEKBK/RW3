@@ -5,7 +5,7 @@ public class Studio {
 
     private String name;
 
-    private byte[] status;
+    private Integer status;
 
     private String picture;
 
@@ -17,7 +17,7 @@ public class Studio {
 
     private String updatedBy;
 
-    public Studio(Long id, String name, byte[] status, String picture, String about, Long createdTime, Long updatedTime, String updatedBy) {
+    public Studio(Long id, String name, Integer status, String picture, String about, Long createdTime, Long updatedTime, String updatedBy) {
         this.id = id;
         this.name = name;
         this.status = status;
@@ -48,11 +48,11 @@ public class Studio {
         this.name = name == null ? null : name.trim();
     }
 
-    public byte[] getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(byte[] status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -94,5 +94,19 @@ public class Studio {
 
     public void setUpdatedBy(String updatedBy) {
         this.updatedBy = updatedBy == null ? null : updatedBy.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Studio{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", status=" + status +
+                ", picture='" + picture + '\'' +
+                ", about='" + about + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                ", updatedBy='" + updatedBy + '\'' +
+                '}';
     }
 }

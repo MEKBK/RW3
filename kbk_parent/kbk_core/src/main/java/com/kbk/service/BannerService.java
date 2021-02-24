@@ -4,6 +4,13 @@ import com.kbk.model.Banner;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+/**
+ * @Description
+ * @Author 况博凯
+ * @Date 2021/02/24 10:14
+ * @Version 1.0
+ */
 @Service
 public interface BannerService {
     /**
@@ -15,8 +22,16 @@ public interface BannerService {
 
     /**
      * 添加banner列表
-     * @param
+     * @param banner
      * @return Banner
      */
-    int insert(Banner banner);
+    boolean insertSelective(Banner banner);
+    /**
+     * 根据Banner状态，是否上架，查询Banner原图
+     *
+     *
+     * @param status
+     * @return Banner
+     */
+    List<Banner> selectBannerByStatus(Boolean status);
 }
